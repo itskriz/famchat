@@ -15,3 +15,7 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.navbar-fixed-top + * {
+	margin-top: 70px;
+}

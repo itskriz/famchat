@@ -1,0 +1,46 @@
+!!!
+%html
+	%head
+		%meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+		%title Famchat
+		= csrf_meta_tags
+		= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+		= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+	%body
+		%nav.navbar.navbar-default.navbar-fixed-top
+			.container-fluid
+				.navbar-header
+					%button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+						%span.sr-only Toggle navigation
+						- (1..3).each do
+							%span.icon-bar
+					= link_to root_path, class: "navbar-brand" do
+						Famchat
+				#bs-example-navbar-collapse-1.collapse.navbar-collapse
+					%ul.nav.navbar-nav
+					%ul.nav.navbar-nav.navbar-right
+						- if user_signed_in?
+							= yield :right_nav
+							%li.dropdown
+								%a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+									= current_user.username
+									%span.caret
+								%ul.dropdown-menu
+									%li= link_to "Settings", edit_user_registration_path
+									%li.divider{:role => "separator"}
+									%li= link_to "Logout", destroy_user_session_path, method: :delete
+						- else
+							%li= link_to "Sign Up", new_user_registration_path
+							%li= link_to "Login", new_user_session_path
+
+	.container-fluid
+		.row
+			%aside.col-sm-2
+				- if user_signed_in?
+					%h5 Chatrooms
+					%ul
+						- current_user.chatrooms.each do |chatroom|
+							%li
+								= link_to chatroom.name, "#"
+			%main.col-sm-10.col
+				= yield
