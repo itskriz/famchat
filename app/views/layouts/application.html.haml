@@ -41,6 +41,6 @@
 					%ul
 						- current_user.chatrooms.each do |chatroom|
 							%li
-								= link_to chatroom.name, "#"
+								= link_to chatroom.name, chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id}
 			%main.col-sm-10.col
 				= yield
