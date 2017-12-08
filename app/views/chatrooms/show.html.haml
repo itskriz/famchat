@@ -3,7 +3,7 @@
 	%strong Name:
 	= @chatroom.name
 
-%div{"data-behavior" => "messages", "data-chatroom-id" => "= @chatroom.id"}
+%div{"data-behavior" => "messages", "data-chatroom-id" => "#{@chatroom.id}"}
 	- @chatroom.messages.order(created_at: :desc).limit(100).reverse.each do |message|
 		= render message
 
